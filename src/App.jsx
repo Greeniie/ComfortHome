@@ -11,6 +11,7 @@ import { Suspense, useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Signup from "./pages/AuthScreens/Signup";
 import Login from "./pages/AuthScreens/Login";
+import MessageDetails from "./pages/MessageDetails";
 
 // 👇 Moved inside BrowserRouter context
 function AppLayout() {
@@ -27,6 +28,7 @@ function AppLayout() {
         <Route path="/home" element={<Home />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/messages" element={<Messages />} />
+        <Route path="/messages/:id" element={<MessageDetails />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
