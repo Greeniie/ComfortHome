@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+
+html, body {
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-top: env(safe-area-inset-top);
+}
+
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   color: black;

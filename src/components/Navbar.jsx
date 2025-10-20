@@ -34,7 +34,7 @@ const Navbar = () => {
       regular: faEnvelopeRegular,
       solid: faEnvelopeSolid,
       path: "/messages",
-      unread: 3, // 👈 static unread count for now
+      unread: 3,
     },
     {
       id: "profile",
@@ -46,7 +46,13 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-sm border-t border-gray-200 shadow-lg flex justify-around items-center py-4 px-4 z-50">
+    <nav
+      className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-sm border-t border-gray-200 shadow-lg flex justify-around items-center px-4 z-50"
+      style={{
+        paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 12px)",
+        paddingTop: "8px",
+      }}
+    >
       {navItems.map((item) => (
         <NavLink
           key={item.id}
@@ -68,7 +74,6 @@ const Navbar = () => {
                   size="lg"
                   className="transition-transform duration-200"
                 />
-                {/* 🔔 Unread badge (only for messages) */}
                 {item.id === "messages" && item.unread > 0 && (
                   <span className="absolute -top-1.5 -right-2 bg-red-500 text-white text-[10px] font-semibold rounded-full w-4 h-4 flex items-center justify-center shadow-sm">
                     {item.unread}
