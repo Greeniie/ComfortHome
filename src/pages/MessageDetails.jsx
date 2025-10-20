@@ -338,18 +338,18 @@ const MessageDetails = () => {
       </div>
 
       {/* Input bar */}
-      <div className="p-3 border-t bg-white flex items-center space-x-2">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-3 flex items-center space-x-2 safe-bottom">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type a message..."
-          className="flex-1 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          className="flex-1 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#1B7339]"
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
         />
         <button
           onClick={handleSend}
-          className="bg-[#1B7339] hover:bg-[#1B7339] text-white rounded-full p-3 transition"
+          className="bg-[#1B7339] hover:bg-[#1B7339]/90 text-white rounded-full p-3 transition"
         >
           <FontAwesomeIcon icon={faPaperPlane} />
         </button>
