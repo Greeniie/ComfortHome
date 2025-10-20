@@ -1,5 +1,5 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import messages from "../MessageSlice";
+import messages from "../MessagesSlice";
 
 const rootReducer = combineReducers({
   messages,

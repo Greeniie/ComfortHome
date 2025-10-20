@@ -37,7 +37,7 @@ const initialState = {
 };
 
 // ✅ Slice
-const MessageSlice = createSlice({
+const MessagesSlice = createSlice({
   name: "messages",
   initialState,
   reducers: {
@@ -48,7 +48,7 @@ const MessageSlice = createSlice({
       state.singleData = {};
     },
   },
-  // ✅ Modern builder syntax (recommended)
+ 
   extraReducers: (builder) => {
     builder
       .addCase(getAllMessages.pending, (state) => {
@@ -81,5 +81,5 @@ const MessageSlice = createSlice({
   },
 });
 
-export const { checkAll, resetSingleData } = MessageSlice.actions;
-export default MessageSlice.reducer;
+export const { checkAll, resetSingleData } = MessagesSlice.actions;
+export default MessagesSlice.reducer;
