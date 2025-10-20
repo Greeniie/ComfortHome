@@ -11,7 +11,7 @@ import Message from "../components/Message";
 
 const Messages = () => {
   const dispatch = useDispatch();
-  
+
   const { data, loading, error } = useSelector((state) => state.messages);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -57,19 +57,42 @@ const Messages = () => {
     );
   }, [data, searchTerm]);
 
-
-
   if (loading)
     return (
-      <div className="flex justify-center items-center h-[calc(100vh-80px)] text-gray-500">
-        Loading messages...
+      <div className="p-4 bg-gray-50 min-h-[calc(100vh-80px)]">
+        <div className="z-30 bg-gray-50/90 backdrop-blur-md pt-3 pb-3 mb-2 shadow-sm rounded-xl">
+          <motion.h2
+            animate={controls}
+            className="font-bold text-gray-800 mb-3 transition-all duration-300
+               text-left text-3xl"
+          >
+            Messages
+          </motion.h2>
+
+          <div className="flex justify-center items-center  h-[calc(100vh-80px)] text-gray-500">
+            Loading messages...
+          </div>
+        </div>
       </div>
     );
 
   if (error)
     return (
-      <div className="flex justify-center items-center h-[calc(100vh-80px)] text-red-500">
-        Failed to load messages.
+      <div className="p-4 bg-gray-50 min-h-[calc(100vh-80px)]">
+        {/* Sticky Header + Search */}
+        <div className=" z-30 bg-gray-50/90 backdrop-blur-md pt-3 pb-3 mb-2 shadow-sm rounded-xl">
+           <motion.h2
+            animate={controls}
+            className="font-bold text-gray-800 mb-3 transition-all duration-300
+               text-left text-3xl"
+          >
+            Messages
+          </motion.h2>
+
+          <div className="flex justify-center items-center h-[calc(100vh-80px)] text-red-500">
+            Failed to load messages.
+          </div>
+        </div>
       </div>
     );
 
@@ -105,11 +128,14 @@ const Messages = () => {
       {/* Message List */}
       {filteredMessages?.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-60 text-gray-400">
-          <FontAwesomeIcon icon={faEnvelopeOpenText} className="text-5xl mb-3" />
+          <FontAwesomeIcon
+            icon={faEnvelopeOpenText}
+            className="text-5xl mb-3"
+          />
           <p>No messages found</p>
         </div>
       ) : (
-      <Message messages={filteredMessages}/>
+        <Message messages={filteredMessages} />
       )}
     </div>
   );

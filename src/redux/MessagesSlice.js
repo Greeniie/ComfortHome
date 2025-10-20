@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { messageService } from "../services/MessageService";
+import { MessagesService } from "../services/MessagesService";
 
 // ✅ Async thunks
 export const getAllMessages = createAsyncThunk(
   "messages/getAll",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await messageService.getAll();
+      const response = await MessagesService.getAll();
       return response;
     } catch (error) {
       return rejectWithValue(error?.response?.data || error.message);
@@ -18,7 +18,7 @@ export const getOneMessage = createAsyncThunk(
   "messages/getOne",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await messageService.getOne(data);
+      const response = await MessagesService.getOne(data);
       return response;
     } catch (error) {
       return rejectWithValue(error?.response?.data || error.message);
@@ -30,7 +30,7 @@ export const getOneMessage = createAsyncThunk(
 const initialState = {
   data: [],
   singleData: {},
-  loading: false,
+  loading: true,
   error: null,
   message: "",
   isChecked: false, // included since you toggle it in checkAll
@@ -48,7 +48,7 @@ const MessagesSlice = createSlice({
       state.singleData = {};
     },
   },
- 
+
   extraReducers: (builder) => {
     builder
       .addCase(getAllMessages.pending, (state) => {

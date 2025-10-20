@@ -14,7 +14,7 @@ const getOne = async (id) => {
   return response.data;
 };
 
-export const messageService = {
+export const MessagesService = {
   getAll,
   getOne,
 };
