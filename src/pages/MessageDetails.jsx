@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { getOneMessage, resetSingleData } from "../redux/MessageSlice";
+import { getOneMessage, resetSingleData } from "../redux/MessagesSlice";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
@@ -23,223 +23,222 @@ const MessageDetails = () => {
     };
   }, [dispatch, id]);
 
-useEffect(() => {
-  if (singleData) {
-    setMessages([
-      {
-        id: 1,
-        sender: singleData.sender || "Artisan",
-        text: singleData.message || "Hello! 👋 How can I help you today?",
-        time: "10:00 AM",
-        fromMe: false,
-      },
-      {
-        id: 2,
-        sender: "You",
-        text: "Hi! I wanted to ask about your plumbing services.",
-        time: "10:02 AM",
-        fromMe: true,
-      },
-      {
-        id: 3,
-        sender: singleData.sender || "Artisan",
-        text: "Sure! What exactly do you need fixed?",
-        time: "10:03 AM",
-        fromMe: false,
-      },
-      {
-        id: 4,
-        sender: "You",
-        text: "There’s a leak under my kitchen sink that’s been getting worse.",
-        time: "10:04 AM",
-        fromMe: true,
-      },
-      {
-        id: 5,
-        sender: singleData.sender || "Artisan",
-        text: "Ah okay, sounds like the pipe seal might be loose. I can check that out for you.",
-        time: "10:06 AM",
-        fromMe: false,
-      },
-      {
-        id: 6,
-        sender: "You",
-        text: "How soon can you come over to take a look?",
-        time: "10:07 AM",
-        fromMe: true,
-      },
-      {
-        id: 7,
-        sender: singleData.sender || "Artisan",
-        text: "Tomorrow morning works. Around 9:30 AM — would that be okay?",
-        time: "10:08 AM",
-        fromMe: false,
-      },
-      {
-        id: 8,
-        sender: "You",
-        text: "That’s perfect 👍",
-        time: "10:09 AM",
-        fromMe: true,
-      },
-      {
-        id: 9,
-        sender: singleData.sender || "Artisan",
-        text: "Great! Please send me your address.",
-        time: "10:10 AM",
-        fromMe: false,
-      },
-      {
-        id: 10,
-        sender: "You",
-        text: "Sure — 45 Allen Avenue, Ikeja.",
-        time: "10:11 AM",
-        fromMe: true,
-      },
-      {
-        id: 11,
-        sender: singleData.sender || "Artisan",
-        text: "Got it. Do you have any photos of the leak so I can bring the right tools?",
-        time: "10:12 AM",
-        fromMe: false,
-      },
-      {
-        id: 12,
-        sender: "You",
-        text: "Yes, just a sec. Uploading now...",
-        time: "10:13 AM",
-        fromMe: true,
-      },
-      {
-        id: 13,
-        sender: "You",
-        text: "✅ Sent!",
-        time: "10:14 AM",
-        fromMe: true,
-      },
-      {
-        id: 14,
-        sender: singleData.sender || "Artisan",
-        text: "Perfect. I see it — looks manageable.",
-        time: "10:15 AM",
-        fromMe: false,
-      },
-      {
-        id: 15,
-        sender: singleData.sender || "Artisan",
-        text: "It might take around an hour to fix, maybe less.",
-        time: "10:16 AM",
-        fromMe: false,
-      },
-      {
-        id: 16,
-        sender: "You",
-        text: "Okay. How much will it cost roughly?",
-        time: "10:17 AM",
-        fromMe: true,
-      },
-      {
-        id: 17,
-        sender: singleData.sender || "Artisan",
-        text: "Shouldn’t be more than ₦15,000 including materials.",
-        time: "10:18 AM",
-        fromMe: false,
-      },
-      {
-        id: 18,
-        sender: "You",
-        text: "That sounds fair. 👍",
-        time: "10:19 AM",
-        fromMe: true,
-      },
-      {
-        id: 19,
-        sender: singleData.sender || "Artisan",
-        text: "Awesome. I’ll confirm again tonight before heading over.",
-        time: "10:20 AM",
-        fromMe: false,
-      },
-      {
-        id: 20,
-        sender: "You",
-        text: "Cool, thank you!",
-        time: "10:21 AM",
-        fromMe: true,
-      },
-      {
-        id: 21,
-        sender: singleData.sender || "Artisan",
-        text: "You’re welcome! Just out of curiosity — is your building new or old?",
-        time: "10:22 AM",
-        fromMe: false,
-      },
-      {
-        id: 22,
-        sender: "You",
-        text: "It’s about 7 years old. The plumbing has been decent until recently.",
-        time: "10:23 AM",
-        fromMe: true,
-      },
-      {
-        id: 23,
-        sender: singleData.sender || "Artisan",
-        text: "Yeah, seals tend to wear out after a few years. A little maintenance goes a long way. 😊",
-        time: "10:25 AM",
-        fromMe: false,
-      },
-      {
-        id: 24,
-        sender: "You",
-        text: "Makes sense. I’ll probably have you check the bathroom next time too.",
-        time: "10:26 AM",
-        fromMe: true,
-      },
-      {
-        id: 25,
-        sender: singleData.sender || "Artisan",
-        text: "Haha no problem, that’s what I’m here for.",
-        time: "10:27 AM",
-        fromMe: false,
-      },
-      {
-        id: 26,
-        sender: "You",
-        text: "😂 True!",
-        time: "10:28 AM",
-        fromMe: true,
-      },
-      {
-        id: 27,
-        sender: singleData.sender || "Artisan",
-        text: "Alright then, I’ll see you tomorrow morning. Don’t forget to turn off the main tap tonight if the leak gets worse.",
-        time: "10:29 AM",
-        fromMe: false,
-      },
-      {
-        id: 28,
-        sender: "You",
-        text: "Will do. Thanks again!",
-        time: "10:30 AM",
-        fromMe: true,
-      },
-      {
-        id: 29,
-        sender: singleData.sender || "Artisan",
-        text: "Anytime! Have a good evening. 🌇",
-        time: "10:31 AM",
-        fromMe: false,
-      },
-      {
-        id: 30,
-        sender: "You",
-        text: "You too 👋",
-        time: "10:32 AM",
-        fromMe: true,
-      },
-    ]);
-  }
-}, [singleData]);
-
+  useEffect(() => {
+    if (singleData) {
+      setMessages([
+        {
+          id: 1,
+          sender: singleData.sender || "Artisan",
+          text: singleData.message || "Hello! 👋 How can I help you today?",
+          time: "10:00 AM",
+          fromMe: false,
+        },
+        {
+          id: 2,
+          sender: "You",
+          text: "Hi! I wanted to ask about your plumbing services.",
+          time: "10:02 AM",
+          fromMe: true,
+        },
+        {
+          id: 3,
+          sender: singleData.sender || "Artisan",
+          text: "Sure! What exactly do you need fixed?",
+          time: "10:03 AM",
+          fromMe: false,
+        },
+        {
+          id: 4,
+          sender: "You",
+          text: "There’s a leak under my kitchen sink that’s been getting worse.",
+          time: "10:04 AM",
+          fromMe: true,
+        },
+        {
+          id: 5,
+          sender: singleData.sender || "Artisan",
+          text: "Ah okay, sounds like the pipe seal might be loose. I can check that out for you.",
+          time: "10:06 AM",
+          fromMe: false,
+        },
+        {
+          id: 6,
+          sender: "You",
+          text: "How soon can you come over to take a look?",
+          time: "10:07 AM",
+          fromMe: true,
+        },
+        {
+          id: 7,
+          sender: singleData.sender || "Artisan",
+          text: "Tomorrow morning works. Around 9:30 AM — would that be okay?",
+          time: "10:08 AM",
+          fromMe: false,
+        },
+        {
+          id: 8,
+          sender: "You",
+          text: "That’s perfect 👍",
+          time: "10:09 AM",
+          fromMe: true,
+        },
+        {
+          id: 9,
+          sender: singleData.sender || "Artisan",
+          text: "Great! Please send me your address.",
+          time: "10:10 AM",
+          fromMe: false,
+        },
+        {
+          id: 10,
+          sender: "You",
+          text: "Sure — 45 Allen Avenue, Ikeja.",
+          time: "10:11 AM",
+          fromMe: true,
+        },
+        {
+          id: 11,
+          sender: singleData.sender || "Artisan",
+          text: "Got it. Do you have any photos of the leak so I can bring the right tools?",
+          time: "10:12 AM",
+          fromMe: false,
+        },
+        {
+          id: 12,
+          sender: "You",
+          text: "Yes, just a sec. Uploading now...",
+          time: "10:13 AM",
+          fromMe: true,
+        },
+        {
+          id: 13,
+          sender: "You",
+          text: "✅ Sent!",
+          time: "10:14 AM",
+          fromMe: true,
+        },
+        {
+          id: 14,
+          sender: singleData.sender || "Artisan",
+          text: "Perfect. I see it — looks manageable.",
+          time: "10:15 AM",
+          fromMe: false,
+        },
+        {
+          id: 15,
+          sender: singleData.sender || "Artisan",
+          text: "It might take around an hour to fix, maybe less.",
+          time: "10:16 AM",
+          fromMe: false,
+        },
+        {
+          id: 16,
+          sender: "You",
+          text: "Okay. How much will it cost roughly?",
+          time: "10:17 AM",
+          fromMe: true,
+        },
+        {
+          id: 17,
+          sender: singleData.sender || "Artisan",
+          text: "Shouldn’t be more than ₦15,000 including materials.",
+          time: "10:18 AM",
+          fromMe: false,
+        },
+        {
+          id: 18,
+          sender: "You",
+          text: "That sounds fair. 👍",
+          time: "10:19 AM",
+          fromMe: true,
+        },
+        {
+          id: 19,
+          sender: singleData.sender || "Artisan",
+          text: "Awesome. I’ll confirm again tonight before heading over.",
+          time: "10:20 AM",
+          fromMe: false,
+        },
+        {
+          id: 20,
+          sender: "You",
+          text: "Cool, thank you!",
+          time: "10:21 AM",
+          fromMe: true,
+        },
+        {
+          id: 21,
+          sender: singleData.sender || "Artisan",
+          text: "You’re welcome! Just out of curiosity — is your building new or old?",
+          time: "10:22 AM",
+          fromMe: false,
+        },
+        {
+          id: 22,
+          sender: "You",
+          text: "It’s about 7 years old. The plumbing has been decent until recently.",
+          time: "10:23 AM",
+          fromMe: true,
+        },
+        {
+          id: 23,
+          sender: singleData.sender || "Artisan",
+          text: "Yeah, seals tend to wear out after a few years. A little maintenance goes a long way. 😊",
+          time: "10:25 AM",
+          fromMe: false,
+        },
+        {
+          id: 24,
+          sender: "You",
+          text: "Makes sense. I’ll probably have you check the bathroom next time too.",
+          time: "10:26 AM",
+          fromMe: true,
+        },
+        {
+          id: 25,
+          sender: singleData.sender || "Artisan",
+          text: "Haha no problem, that’s what I’m here for.",
+          time: "10:27 AM",
+          fromMe: false,
+        },
+        {
+          id: 26,
+          sender: "You",
+          text: "😂 True!",
+          time: "10:28 AM",
+          fromMe: true,
+        },
+        {
+          id: 27,
+          sender: singleData.sender || "Artisan",
+          text: "Alright then, I’ll see you tomorrow morning. Don’t forget to turn off the main tap tonight if the leak gets worse.",
+          time: "10:29 AM",
+          fromMe: false,
+        },
+        {
+          id: 28,
+          sender: "You",
+          text: "Will do. Thanks again!",
+          time: "10:30 AM",
+          fromMe: true,
+        },
+        {
+          id: 29,
+          sender: singleData.sender || "Artisan",
+          text: "Anytime! Have a good evening. 🌇",
+          time: "10:31 AM",
+          fromMe: false,
+        },
+        {
+          id: 30,
+          sender: "You",
+          text: "You too 👋",
+          time: "10:32 AM",
+          fromMe: true,
+        },
+      ]);
+    }
+  }, [singleData]);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
