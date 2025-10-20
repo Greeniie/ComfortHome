@@ -10,6 +10,9 @@ import {
   faLock,
 } from "@fortawesome/free-solid-svg-icons";
 import { motion, useAnimation } from "framer-motion";
+import { zxcvbn, zxcvbnOptions } from "@zxcvbn-ts/core";
+import * as zxcvbnCommonPackage from "@zxcvbn-ts/language-common";
+import * as zxcvbnEnPackage from "@zxcvbn-ts/language-en";
 
 const Profile = () => {
   const fileInputRef = useRef(null);
@@ -17,6 +20,22 @@ const Profile = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [phoneError, setPhoneError] = useState("");
+  const [passwordMatchError, setPasswordMatchError] = useState("");
+
+  useEffect(() => {
+  // Setup password strength options once
+  const options = {
+    translations: zxcvbnEnPackage.translations,
+    graphs: zxcvbnCommonPackage.adjacencyGraphs,
+    dictionary: {
+      ...zxcvbnCommonPackage.dictionary,
+      ...zxcvbnEnPackage.dictionary,
+    },
+  };
+  zxcvbnOptions.setOptions(options);
+}, []);
+
+const [passwordStrength, setPasswordStrength] = useState(null);
 
   // Header animation controls
   const controls = useAnimation();
@@ -64,6 +83,18 @@ const Profile = () => {
     }
   };
 
+  const handlePasswordChange = (e) => {
+  const { value } = e.target;
+  setFormData({ ...formData, password: value });
+
+  if (value.trim()) {
+    const result = zxcvbn(value);
+    setPasswordStrength(result);
+  } else {
+    setPasswordStrength(null);
+  }
+};
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -72,6 +103,17 @@ const Profile = () => {
     }
 
     setFormData({ ...formData, [name]: value });
+
+     if (name === "password" || name === "confirmPassword") {
+      const otherField =
+        name === "password" ? formData.confirmPassword : formData.password;
+
+      if (otherField && value !== otherField) {
+        setPasswordMatchError("Passwords do not match.");
+      } else {
+        setPasswordMatchError("");
+      }
+    }
   };
 
   const validatePhone = (phone) => {
@@ -222,8 +264,8 @@ const Profile = () => {
             <p className="text-red-500 text-xs mb-2 ml-1">{phoneError}</p>
           )}
 
-          {/* Password */}
-          <div className="relative">
+       {/* Password */}
+ <div className="relative mb-2">
             <FontAwesomeIcon
               icon={faLock}
               className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
@@ -231,10 +273,14 @@ const Profile = () => {
             <input
               type={showPassword ? "text" : "password"}
               name="password"
-              placeholder="New Password"
+              placeholder="Password"
               value={formData.password}
-              onChange={handleChange}
-              className="w-full pl-10 pr-10 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#1B7339] focus:border-transparent"
+              onChange={handlePasswordChange}
+              className={`w-full pl-10 pr-10 py-2 rounded-xl border ${
+                passwordStrength && passwordStrength.score < 2
+                  ? "border-red-400 focus:ring-red-300"
+                  : "border-gray-200 focus:ring-[#1B7339]"
+              } focus:ring-2 focus:border-transparent`}
             />
             <button
               type="button"
@@ -245,30 +291,68 @@ const Profile = () => {
             </button>
           </div>
 
+{/* Password Strength Meter */}
+{passwordStrength && (
+  <div className="mt-2">
+    <div className="h-2 rounded-full bg-gray-200 overflow-hidden">
+      <div
+        className={`h-2 transition-all duration-500 rounded-full ${
+          [
+            "bg-red-500",
+            "bg-orange-500",
+            "bg-yellow-500",
+            "bg-blue-500",
+            "bg-green-500",
+          ][passwordStrength.score]
+        }`}
+        style={{ width: `${(passwordStrength.score + 1) * 20}%` }}
+      ></div>
+    </div>
+    <p
+      className={`text-xs mt-1 ${
+        ["text-red-600", "text-orange-600", "text-yellow-600", "text-blue-600", "text-green-600"][
+          passwordStrength.score
+        ]
+      }`}
+    >
+      {["Very Weak", "Weak", "Fair", "Good", "Strong"][passwordStrength.score]}
+    </p>
+  </div>
+)}
+
+
           {/* Confirm Password */}
-          <div className="relative">
-            <FontAwesomeIcon
-              icon={faLock}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-            />
-            <input
-              type={showConfirmPassword ? "text" : "password"}
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className="w-full pl-10 pr-10 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#1B7339] focus:border-transparent"
-            />
-            <button
-              type="button"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-            >
-              <FontAwesomeIcon
-                icon={showConfirmPassword ? faEyeSlash : faEye}
-              />
-            </button>
-          </div>
+        <div className="relative">
+  <FontAwesomeIcon
+    icon={faLock}
+    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+  />
+  <input
+    type={showConfirmPassword ? "text" : "password"}
+    name="confirmPassword"
+    placeholder="Confirm Password"
+    value={formData.confirmPassword}
+    onChange={handleChange}
+    className={`w-full pl-10 pr-10 py-2 rounded-lg bg-white/20 border ${
+      passwordMatchError
+        ? "border-red-400 focus:ring-red-300"
+        : "border-gray-200 focus:ring-[#1B7339]"
+    } focus:ring-2 focus:border-transparent transition`}
+  />
+  <button
+    type="button"
+    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+  >
+    <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} />
+  </button>
+</div>
+
+{/* Error text */}
+{passwordMatchError && (
+  <p className="text-red-500 text-xs mt-1 ml-1">{passwordMatchError}</p>
+)}
+
 
           {/* Save Button */}
           <button
