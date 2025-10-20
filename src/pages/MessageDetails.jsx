@@ -265,14 +265,14 @@ const MessageDetails = () => {
   if (loading)
     return (
       <div className="flex justify-center items-center h-[calc(100vh-80px)] text-gray-500">
-        Loading messages...
+        Loading conversation...
       </div>
     );
 
   if (error)
     return (
       <div className="flex justify-center items-center h-full text-red-500">
-        Failed to load message.
+        Failed to load conversation.
       </div>
     );
 

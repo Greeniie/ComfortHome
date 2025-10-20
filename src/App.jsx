@@ -17,9 +17,14 @@ import MessageDetails from "./pages/MessageDetails";
 function AppLayout() {
   const location = useLocation();
 
-  // paths where navbar should be hidden
+  // Paths where navbar should be hidden
   const hideNavbarRoutes = ["/", "/signup", "/login"];
-  const shouldShowNavbar = !hideNavbarRoutes.includes(location.pathname);
+
+  // Hide navbar also for dynamic message details like /messages/123
+  const isMessageDetails = /^\/messages\/\d+/.test(location.pathname);
+
+  const shouldShowNavbar =
+    !hideNavbarRoutes.includes(location.pathname) && !isMessageDetails;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -39,6 +44,7 @@ function AppLayout() {
     </div>
   );
 }
+
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
