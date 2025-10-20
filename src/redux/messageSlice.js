@@ -37,7 +37,7 @@ const initialState = {
 };
 
 // ✅ Slice
-const messageSlice = createSlice({
+const MessageSlice = createSlice({
   name: "messages",
   initialState,
   reducers: {
@@ -81,5 +81,5 @@ const messageSlice = createSlice({
   },
 });
 
-export const { checkAll, resetSingleData } = messageSlice.actions;
-export default messageSlice.reducer;
+export const { checkAll, resetSingleData } = MessageSlice.actions;
+export default MessageSlice.reducer;
