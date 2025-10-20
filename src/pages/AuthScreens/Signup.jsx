@@ -23,7 +23,6 @@ const Profile = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [phoneError, setPhoneError] = useState("");
   const [passwordMatchError, setPasswordMatchError] = useState("");
-  const [role, setRole] = useState("client");
 
   useEffect(() => {
     // Setup password strength options once
@@ -39,34 +38,6 @@ const Profile = () => {
   }, []);
 
   const [passwordStrength, setPasswordStrength] = useState(null);
-
-  // Header animation controls
-  const controls = useAnimation();
-  const [scrolled, setScrolled] = useState(false);
-
-  // Detect scroll and animate header
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 30) {
-        setScrolled(true);
-        controls.start({
-          x: "50%",
-          translateX: "-50%",
-          scale: 0.9,
-        });
-      } else {
-        setScrolled(false);
-        controls.start({
-          x: 0,
-          translateX: "0%",
-          scale: 1,
-        });
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [controls]);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -199,49 +170,7 @@ const Profile = () => {
 
         {/* Profile Form */}
         <form className="space-y-4">
-          <div className="flex justify-center items-center gap-4">
-            {/* Customer Option */}
-            <label>
-              <input
-                type="radio"
-                name="role"
-                value="client"
-                checked={role === "client"}
-                onChange={(e) => setRole(e.target.value)}
-                className="hidden"
-              />
-              <div
-                className={`cursor-pointer px-4 py-2 rounded-lg shadow-md transition ${
-                  role === "client"
-                    ? "bg-[#1B7339] text-white"
-                    : "bg-gray-200 text-gray-700"
-                }`}
-              >
-                Client
-              </div>
-            </label>
-
-            {/* Vendor Option */}
-            <label>
-              <input
-                type="radio"
-                name="role"
-                value="vendor"
-                checked={role === "vendor"}
-                onChange={(e) => setRole(e.target.value)}
-                className="hidden"
-              />
-              <div
-                className={`cursor-pointer px-4 py-2 rounded-lg transition shadow-md ${
-                  role === "vendor"
-                    ? "bg-[#1B7339] text-white"
-                    : "bg-gray-200 text-gray-700"
-                }`}
-              >
-                Vendor
-              </div>
-            </label>
-          </div>
+       
 
           {/* First Name */}
           <div className="relative">
