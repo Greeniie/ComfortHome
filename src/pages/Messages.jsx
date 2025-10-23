@@ -60,7 +60,7 @@ const Messages = () => {
   if (loading)
     return (
       <div className="p-4 bg-gray-50 min-h-[calc(100vh-80px)]">
-        <div className="z-30 bg-gray-50/90 backdrop-blur-md pt-3 pb-3 mb-2 shadow-sm rounded-xl">
+        <div className="z-30 bg-gray-50/90 backdrop-blur-md pt-3 pb-3 mb-2 rounded-xl">
           <motion.h2
             animate={controls}
             className="font-bold text-gray-800 mb-3 transition-all duration-300
@@ -80,7 +80,7 @@ const Messages = () => {
     return (
       <div className="p-4 bg-gray-50 min-h-[calc(100vh-80px)]">
         {/* Sticky Header + Search */}
-        <div className=" z-30 bg-gray-50/90 backdrop-blur-md pt-3 pb-3 mb-2 shadow-sm rounded-xl">
+        <div className=" z-30 bg-gray-50/90 backdrop-blur-md pt-3 pb-3 mb-2 rounded-xl">
            <motion.h2
             animate={controls}
             className="font-bold text-gray-800 mb-3 transition-all duration-300
@@ -99,7 +99,7 @@ const Messages = () => {
   return (
     <div className="p-4 bg-gray-50 min-h-[calc(100vh-80px)]">
       {/* Sticky Header + Search */}
-      <div className="sticky top-0 z-30 bg-gray-50/90 backdrop-blur-md pt-3 pb-3 mb-2 shadow-sm rounded-xl">
+      <div className="sticky top-0 z-30 bg-gray-50/90 backdrop-blur-md pt-3 pb-3 mb-2">
         <motion.h2
           animate={controls}
           className={`font-bold text-gray-800 mb-3 transition-all duration-300 ${

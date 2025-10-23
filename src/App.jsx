@@ -12,6 +12,7 @@ import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Signup from "./pages/AuthScreens/Signup";
 import Login from "./pages/AuthScreens/Login";
 import MessageDetails from "./pages/MessageDetails";
+import ProjectDetails from "./pages/ProjectDetails";
 
 // 👇 Moved inside BrowserRouter context
 function AppLayout() {
@@ -32,6 +33,7 @@ function AppLayout() {
         <Route path="/" element={<Welcome />} />
         <Route path="/home" element={<Home />} />
         <Route path="/projects" element={<Projects />} />
+        <Route path="/projects/:id" element={<ProjectDetails />} />
         <Route path="/messages" element={<Messages />} />
         <Route path="/messages/:id" element={<MessageDetails />} />
         <Route path="/profile" element={<Profile />} />
@@ -44,7 +46,6 @@ function AppLayout() {
     </div>
   );
 }
-
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
