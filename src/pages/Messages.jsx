@@ -81,7 +81,7 @@ const Messages = () => {
       <div className="p-4 bg-gray-50 min-h-[calc(100vh-80px)]">
         {/* Sticky Header + Search */}
         <div className=" z-30 bg-gray-50/90 backdrop-blur-md pt-3 pb-3 mb-2 rounded-xl">
-           <motion.h2
+          <motion.h2
             animate={controls}
             className="font-bold text-gray-800 mb-3 transition-all duration-300
                text-left text-3xl"
@@ -120,7 +120,10 @@ const Messages = () => {
             placeholder="Search by username..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-400 focus:border-transparent bg-white shadow-sm"
+            className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-200 
+             focus:ring-2 focus:ring-[#1B7339] focus:border-transparent 
+             bg-white shadow-sm outline-none focus:outline-none 
+             autofill:bg-white autofill:shadow-[0_0_0px_1000px_white_inset]"
           />
         </div>
       </div>
