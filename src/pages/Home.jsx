@@ -1,19 +1,65 @@
-import Navbar from "../components/Navbar";
+import { useState, useEffect } from "react";
+import { motion, useAnimation } from "framer-motion";
+import moment from "moment";
 
 const Home = () => {
-  return (
-    <div className="min-w-screen min-h-screen bg-gray-200 ">
-      <div
-        className="bg-white text-gray-800 rounded-xl shadow-lg overflow-hidden relative flex"
-      >
-        <div className="bg-white h-full w-full px-5 pt-6 pb-20 overflow-y-auto">
-          <div className="mb-3">
-            <h1 className="text-3xl font-bold">Today</h1>
-            <p className="text-sm text-gray-500 uppercase font-bold">
-              THURSDAY 6 AUGUST
-            </p>
-          </div>
+  const controls = useAnimation();
+  const [scrolled, setScrolled] = useState(false);
+   const [todayDate, setTodayDate] = useState(moment().format("dddd, Do MMM YYYY"));
+   const yesterday = moment().subtract(1, "days").format("dddd, Do MMM YYYY");
 
+  useEffect(() => {
+    // Update date every minute
+    const interval = setInterval(() => {
+      setTodayDate(moment().format("dddd, Do MMM YYYY"));
+    }, 60000);
+
+    // Cleanup
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 30) {
+        setScrolled(true);
+        controls.start({ x: "50%", translateX: "-50%", scale: 0.9 });
+      } else {
+        setScrolled(false);
+        controls.start({ x: 0, translateX: "0%", scale: 1 });
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [controls]);
+
+  return (
+    <div className="min-h-screen bg-gray-50 ">
+      <div className="sticky top-0 z-30 bg-gray-50 pt-3 pb-3 mb-2">
+        {/* Header */}
+        <div className="pb-2 px-4">
+          <motion.h2
+            animate={controls}
+            className="font-bold text-gray-800 transition-all duration-300"
+          >
+            <div
+              className={` ${
+                scrolled ? "text-center text-xl" : "text-left text-3xl"
+              }`}
+            >
+              Today
+            </div>
+            <div
+              className={`text-sm text-gray-500 uppercase font-bold ${
+                scrolled ? "text-center " : "text-left"
+              }`}
+            >
+              {todayDate}
+            </div>
+          </motion.h2>
+        </div>
+      </div>
+      <div className=" text-gray-800 rounded-xl shadow-lg overflow-hidden relative flex">
+        <div className=" h-full w-full px-5 pt-6 pb-20 overflow-y-auto">
           {/* CARD 1 */}
           <div className="mb-5">
             <a
@@ -25,7 +71,7 @@ const Home = () => {
               }}
             >
               <div className="absolute top-0 right-0 -mt-3 mr-3">
-                <div className="rounded-full bg-indigo-500 text-white text-xs py-1 pl-2 pr-3 leading-none flex items-center gap-1">
+                <div className="rounded-full bg-[#1B7339] text-white text-xs py-1 pl-2 pr-3 leading-none flex items-center gap-1">
                   <i className="mdi mdi-fire text-base"></i>
                   <span>FRESH</span>
                 </div>
@@ -88,7 +134,7 @@ const Home = () => {
           <div className="mb-3">
             <h1 className="text-3xl font-bold">Yesterday</h1>
             <p className="text-sm text-gray-500 uppercase font-bold">
-              WEDNESDAY 5 AUGUST
+              {yesterday}
             </p>
           </div>
 
@@ -222,8 +268,6 @@ const Home = () => {
             </div>
           ))}
         </div>
-
-    
       </div>
     </div>
   );
